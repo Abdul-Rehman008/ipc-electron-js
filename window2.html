@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="img-src 'self' data:; default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'">
+    <title>Window 2</title>
+</head>
+
+<body>
+    <h1>Camera Access</h1>
+    <video autoplay width="400" height="300" id="camera"></video>
+    <img id="image" />
+    <button id="capture-image">Capture Image</button>
+
+    <script src="window2.js"></script>
+</body>
+
+</html>
