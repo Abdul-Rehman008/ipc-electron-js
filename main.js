@@ -1,5 +1,7 @@
 const { app, BrowserWindow, Menu, shell, ipcMain } = require("electron");
 const path = require("path");
+const isDev = require('electron-is-dev');
+// const AutoLaunch = require('auto-launch');
 
 const menuItems = [
   {
@@ -88,6 +90,38 @@ app.whenReady().then(() => {
   });
 });
 
+
+if (!isDev) {
+  app.setLoginItemSettings({
+    openAtLogin: true,
+  });
+  
+  console.log("auto start application");
+}
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+
+/* const meterAutoLauncher = new AutoLaunch({
+  name: 'Minecraft',
+  path: '/Applications/Minecraft.app',
+});
+
+meterAutoLauncher.enable();
+
+//minecraftAutoLauncher.disable();
+
+
+meterAutoLauncher.isEnabled()
+  .then(function (isEnabled) {
+    if (isEnabled) {
+      return;
+    }
+    meterAutoLauncher.enable();
+  })
+  .catch(function (err) {
+    // handle error
+  });
+ */
