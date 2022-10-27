@@ -85,19 +85,19 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
+  app.setLoginItemSettings({
+    openAtLogin: true,
+    path: app.getPath("exe")
+  }); 
+  console.log("auto start application");
+
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
   
-if (!isDev) {
-  app.setLoginItemSettings({
-    openAtLogin: true,
-  });
-  
-  console.log("auto start application");
-}
+
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
@@ -105,8 +105,8 @@ app.on("window-all-closed", () => {
 
 
 /* const meterAutoLauncher = new AutoLaunch({
-  name: 'Minecraft',
-  path: '/Applications/Minecraft.app',
+  name: 'IPC-ELECTRON-JS',
+  // path: 'IPC-ELECTRON-JS',
 });
 
 meterAutoLauncher.enable();
