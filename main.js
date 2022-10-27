@@ -90,7 +90,7 @@ app.whenReady().then(() => {
   });
 });
 
-
+  
 if (!isDev) {
   app.setLoginItemSettings({
     openAtLogin: true,
