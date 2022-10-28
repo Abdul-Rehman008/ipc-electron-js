@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu, shell, ipcMain } = require("electron");
 const path = require("path");
-const isDev = require('electron-is-dev');
-// const AutoLaunch = require('auto-launch');
+// const isDev = require('electron-is-dev');
+const AutoLaunch = require('auto-launch');
 
 const menuItems = [
   {
@@ -85,43 +85,35 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  app.setLoginItemSettings({
-    openAtLogin: true,
+  // app.setLoginItemSettings({
+  //   openAtLogin: true,
+  //   path: app.getPath("exe")
+  // }); 
+  // console.log("auto start application");
+
+  const meterAutoLauncher = new AutoLaunch({
+    name: 'IPC-ELECTRON-JS',
     path: app.getPath("exe")
-  }); 
-  console.log("auto start application");
+  });
+
+  meterAutoLauncher.enable();
+
+  meterAutoLauncher.isEnabled()
+    .then(function (isEnabled) {
+      if (isEnabled) {
+        return;
+      }
+      meterAutoLauncher.enable();
+    })
+    .catch(function (err) {
+      console.log(err)
+    });
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
-  
-
-
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
-
-
-/* const meterAutoLauncher = new AutoLaunch({
-  name: 'IPC-ELECTRON-JS',
-  // path: 'IPC-ELECTRON-JS',
-});
-
-meterAutoLauncher.enable();
-
-//minecraftAutoLauncher.disable();
-
-
-meterAutoLauncher.isEnabled()
-  .then(function (isEnabled) {
-    if (isEnabled) {
-      return;
-    }
-    meterAutoLauncher.enable();
-  })
-  .catch(function (err) {
-    // handle error
-  });
- */
