@@ -85,11 +85,15 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  // app.setLoginItemSettings({
-  //   openAtLogin: true,
-  //   path: app.getPath("exe")
-  // }); 
-  // console.log("auto start application");
+  // using electron api
+/* 
+  app.setLoginItemSettings({
+    openAtLogin: true,
+    path: app.getPath("exe")
+  }); 
+  console.log("auto start application"); */
+
+  // using node pack auto-lanuch
 
   const meterAutoLauncher = new AutoLaunch({
     name: 'IPC-ELECTRON-JS',
