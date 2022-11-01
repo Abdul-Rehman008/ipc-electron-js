@@ -87,9 +87,9 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   createWindow();
-  electron.powerMonitor.on('lock-screen', () => {
-    console.log('The system is going to sleep')
-  });
+  // electron.powerMonitor.on('lock-screen', () => {
+  //   console.log('The system is going to sleep')
+  // });
   // using electron api
   /* 
     app.setLoginItemSettings({
@@ -123,6 +123,12 @@ app.whenReady().then(() => {
   // console.log(!(powerSaveBlocker.isStarted(id)));
   // powerSaveBlocker.stop(id);  
   // console.log("the power is "+ !(powerSaveBlocker.stop(id)));
+
+
+
+  electron.powerMonitor.on('lock-screen', () => {
+    console.log('The system is going to sleep')
+  });
 });
 
 app.on("window-all-closed", () => {
