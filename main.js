@@ -1,7 +1,10 @@
 const { app, BrowserWindow, Menu, shell, ipcMain } = require("electron");
 const path = require("path");
+// require for electron api
 // const isDev = require('electron-is-dev');
-const AutoLaunch = require('auto-launch');
+// const AutoLaunch = require('auto-launch');
+const { powerSaveBlocker } = require('electron')
+const electron = require('electron')
 
 const menuItems = [
   {
@@ -84,40 +87,46 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   createWindow();
-
+  electron.powerMonitor.on('lock-screen', () => {
+    console.log('The system is going to sleep')
+  });
   // using electron api
-/* 
-  app.setLoginItemSettings({
-    openAtLogin: true,
-    path: app.getPath("exe")
-  }); 
-  console.log("auto start application"); */
+  /* 
+    app.setLoginItemSettings({
+      openAtLogin: true,
+      path: app.getPath("exe")
+    }); 
+    console.log("auto start application"); */
 
   // using node pack auto-lanuch
 
-  const meterAutoLauncher = new AutoLaunch({
-    name: 'IPC-ELECTRON-JS',
-    path: app.getPath("exe")
-  });
-
-  meterAutoLauncher.enable();
-
-  meterAutoLauncher.isEnabled()
-    .then(function (isEnabled) {
-      if (isEnabled) {
-        return;
-      }
-      meterAutoLauncher.enable();
-    })
-    .catch(function (err) {
-      console.log(err)
-    });
-
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
+  /*  const meterAutoLauncher = new AutoLaunch({
+     name: 'IPC-ELECTRON-JS',
+     path: app.getPath("exe")
+   });
+ 
+   meterAutoLauncher.enable();
+ 
+   meterAutoLauncher.isEnabled()
+     .then(function (isEnabled) {
+       if (isEnabled) {
+         return;
+       }
+       meterAutoLauncher.enable();
+     })
+     .catch(function (err) {
+       console.log(err)
+     }); */
+  //  for turn off app while sleep mode
+  
+  // const id = powerSaveBlocker.start('prevent-display-sleep')
+  // console.log(!(powerSaveBlocker.isStarted(id)));
+  // powerSaveBlocker.stop(id);  
+  // console.log("the power is "+ !(powerSaveBlocker.stop(id)));
 });
 
 app.on("window-all-closed", () => {
+
   if (process.platform !== "darwin") app.quit();
+  
 });
